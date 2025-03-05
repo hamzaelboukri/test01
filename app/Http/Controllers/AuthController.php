@@ -14,8 +14,8 @@ class AuthController extends Controller
      */
     public function index()
     {
-        $roles= role::;
-        return view('welcome',compact('roles') );
+        $roles = role::all();
+        return view('welcome', compact('roles'));
 
     }
 
@@ -32,14 +32,19 @@ class AuthController extends Controller
      */
     public function store(StoreauthRequest $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|unique:posts|max:255',
-            'email' => 'required',
-            'password' => 'required|min8',
-            'id_role' => 'id'
+    $request->validate([
+        'name' => 'required|unique:posts|max:255',
+        'email' => 'required',
+        'password' => 'required|min:8',
+        'id_role' => 'required|exists:roles,id'
+    ]);
 
-        ]);
-      $validated= auth::tempnam();
+    auth::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => hash($request->password),
+        'id_role' => $request->id_role
+    ]);
         
 
     }

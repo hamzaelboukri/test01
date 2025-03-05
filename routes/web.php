@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\logincontroller;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +18,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/', [AuthController::class, 'store']);
+Route::get('/login', [AuthController::class, 'index']);
+Route::get('/login', [logincontroller::class, 'store']);
+
+
